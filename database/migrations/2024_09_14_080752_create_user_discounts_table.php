@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('user_discounts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');  // Tên người dùng
-            $table->string('email')->unique();  // Email phải là duy nhất
-            $table->string('phone');  // Số điện thoại nên dùng string
-            $table->string('address');  // Sửa lại từ "adress" thành "address"
+            $table->unsignedBigInteger('discount_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            $table->foreign('discount_id')->references('id')->on('discounts')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user_discounts');
     }
 };

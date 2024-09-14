@@ -20,8 +20,19 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'address',
+        'role'
     ];
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+    public function discounts()
+    {
+        return $this->belongsToMany(Discount::class, 'discounts_product');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

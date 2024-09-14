@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('status');  // Tên sản phẩm
+            $table->unsignedBigInteger('product_id');  // Mã danh mục (liên kết với bảng categories)
             $table->unsignedBigInteger('user_id');  // Mã danh mục (liên kết với bảng categories)
-             $table->decimal('total_amount', 8, 2);  // tộngr cộng
-          
-             $table->timestamp('order_date');  // Hình ảnh sản phẩm (có thể null)
+            $table->integer('star');
+            $table->text('content');  // Mô tả sản phẩm (có thể null)
             $table->timestamps();
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('restrict');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('comments');
     }
 };

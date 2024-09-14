@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('post_categories', function (Blueprint $table) {
+        Schema::create('discounts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');  // Tên sản phẩm
-             $table->text('description');  // Mô tả sản phẩm (có thể null)
+            $table->string('code');  // Tên code
+            $table->decimal('discount_percent', 8, 2);  // % giảm giá
+            $table->text('description');  
+            $table->date('valid_form');// ngày bắt đầu
+            $table->date('valid_end');  // ngày kết thúc
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_categories');
+        Schema::dropIfExists('discounts');
     }
 };
